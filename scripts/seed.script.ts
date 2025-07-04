@@ -4,6 +4,7 @@ import { reset, seed } from "drizzle-seed";
 
 export const seedDb = async () => {
   await reset(db, schema);
+  const todoNum = Math.floor(Math.random() * (30 - 13 + 1)) + 13;
 
   const todoTitles = [
     "Buy groceries",
@@ -56,8 +57,8 @@ export const seedDb = async () => {
       columns: {
         age: funcs.int({ minValue: 13, maxValue: 120 }),
       },
-      count: 30,
-      with: { todosTable: 21 },
+      count: 50,
+      with: { todosTable: todoNum },
     },
     todosTable: {
       columns: {
