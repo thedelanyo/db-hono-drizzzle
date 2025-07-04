@@ -56,8 +56,8 @@ export const seedDb = async () => {
       columns: {
         age: funcs.int({ minValue: 13, maxValue: 120 }),
       },
-      count: 20,
-      with: { todosTable: 20 },
+      count: 30,
+      with: { todosTable: 21 },
     },
     todosTable: {
       columns: {

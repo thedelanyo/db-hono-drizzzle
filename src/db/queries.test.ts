@@ -30,3 +30,29 @@ describe("addTodo", () => {
     expect(todo.userId).toBe(newTodo.userId);
   });
 });
+
+describe("getTodoByUserId", () => {
+  it("should return todos for a given user id", async () => {
+    const userId = await createUser("test@test.com", "password#1234");
+
+    const newTodos = [
+      {
+        userId,
+        title: "Test Todo",
+        description: "This is a test todo item",
+      },
+      {
+        userId,
+        title: "Test Todo",
+        description: "This is a test todo item",
+      },
+    ] satisfies Todo[];
+
+    await addTodo(newTodos[0]);
+    await addTodo(newTodos[1]);
+
+    const todos = await getTodosByUserId(userId);
+
+    expect(todos.length).toBe(2);
+  });
+});
