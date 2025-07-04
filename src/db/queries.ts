@@ -2,7 +2,8 @@
 
 import { desc, eq } from "drizzle-orm";
 import { db } from "./db";
-import { todosTable as table } from "./schema";
+import { todosTable as table, usersTable } from "./schema";
+import { UUID } from "crypto";
 
 export type Todo = {
   userId: string;
@@ -25,4 +26,16 @@ export const getTodosByUserId = async (userId: string) => {
     .orderBy(desc(table.createdAt));
 
   return todos;
+};
+
+export const createUser = async (email: string, password: string) => {
+  const passwordHash = await Bun.password.hash(password);
+  const age = Math.floor(Math.random() * (120 - 13 + 1)) + 13;
+
+  const [user] = await db
+    .insert(usersTable)
+    .values({ email, passwordHash, age })
+    .returning();
+
+  return user.id as UUID;
 };
